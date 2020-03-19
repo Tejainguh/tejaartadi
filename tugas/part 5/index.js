@@ -87,7 +87,7 @@ ipcMain.on("appointment:request:today", event => {
     console.log("here2");
 });
 
-ipcMain.on("appointment:done", id => {
+ipcMain.on("appointment:done", (event, id) => {
     console.log("here3");
 });
  
