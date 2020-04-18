@@ -1,0 +1,83 @@
+<html>
+<head>
+    <title></title>
+    <style>
+        .cover{
+            background-image: url(alam.jpeg);
+            background-position: center;
+            width: auto;
+            height: auto;
+        }
+        table{
+            background: blue;
+            margin: auto;
+        }
+
+    </style>
+</head>
+<body class="cover">
+    <div>
+        <table border="1">
+            <h2 align="center" style="background: white;"><marquee>Kasir Toko Sebelah</marquee></h2>
+            <tr>
+                <th>Nama</th>
+                <th><input type="text" id="nama" onchange="total()"></th>
+            </tr>
+            <tr>
+                <th>Harga</th>
+                <th><input type="number" id="harga" onchange="total()"></th>
+            </tr>
+            <tr>
+                <th>Jumlah</th>
+                <th><input type="text" id="jumlah" onchange="total()"></th>
+            </tr>
+            <tr>
+                <th>Jenis</th>
+                <th><select id="status" onchange="total()">
+                <option>Makanan</option>
+                <option>Minuman</option>
+                <option>Pakian</option>
+                <option>Perabotan</option>
+                </select></th>
+            </tr>
+            <tr>
+                <th>Jumlah Total</th>
+                <th><input type="text" id="total" disabled></th>
+            </tr>
+            <tr>
+                <th>Pembayaran</th>
+                <th><input type="number" id="bayar" onchange="total()"></th>
+            </tr>
+            <tr>
+                <th>Kembalian</th>
+                <th><input type="text" id="total1" disabled></th>
+            </tr>
+                <th><input type="button" value="reload" onclick="document.location.reload(true)">
+            </th>
+            <tr>
+                <th><input type="button" style="background: white;" onclick="window.print()" value="CETAK"></th>
+            </tr>
+          
+         
+        </table>
+        <script type="text/javascript">
+        
+        function total(){
+            var nama = document.getElementById('nama').value;
+            var harga = parseInt(document.getElementById('harga').value);
+            var jumlah = parseInt(document.getElementById('jumlah').value);
+            var pembayaran = parseInt(document.getElementById('bayar').value);
+            var jenis = document.getElementById("status").value;
+            var jumlah_harga = harga*jumlah;
+            document.getElementById('total').value=jumlah_harga;
+            var kembali = pembayaran-jumlah_harga;
+            document.getElementById('total1').value=kembali;
+        }
+        function reloadpage(){
+            location.reload()
+        }
+        
+        </script>
+    </div>
+</body>
+</html>

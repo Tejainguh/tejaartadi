@@ -10,18 +10,19 @@ const {
 } = electron;
 
 let todayWindow;
-let createWindow;
+let customerWindow;
 let listWindow;
 let aboutWindow;
+let bayarWindow;
 
-let allApointment = [];
+let allkasir = [];
 
 app.on("ready", () => {
     todayWindow = new BrowserWindow({
         webPreferences: {
             nodeIntegration: true
         }, 
-        title : "Aplikasi Kedokteran"
+        title : "Aplikasi Kasir"
     });
 
     todayWindow.loadURL(`file://${__dirname}/today.html`);
@@ -43,26 +44,41 @@ const listWindowCreator = () => {
         },
         width: 600,
         height: 400,
-        title: "All Appointments"
+        title: "Data"
     });
 
     listWindow.setMenu(null);
     listWindow.loadURL(`file://${__dirname}/list.html`);
     listWindow.on("closed", ()  => (listWindow = null));
 };
-const createWindowCreator = () => {
-    createWindow = new BrowserWindow ({
+const customerWindowCreator = () => {
+    customerWindow = new BrowserWindow ({
         webPreferences: {
             nodeIntegration: true
         },
         width: 600,
         height: 400,
-        title: "Create Appointments"
+        title: "Customer "
     });
 
-    createWindow.setMenu(null);
-    createWindow.loadURL(`file://${__dirname}/create.html`);
-    createWindow.on("closed", ()  => (createWindow = null));
+    customerWindow.setMenu(null);
+    customerWindow.loadURL(`file://${__dirname}/customer.html`);
+    customerWindow.on("closed", ()  => (customerWindow = null));
+};
+
+const bayarWindowCreator = () => {
+    bayarWindow = new BrowserWindow ({
+        webPreferences: {
+            nodeIntegration: true
+        },
+        width: 600,
+        height: 400,
+        title: "Kasir"
+    });
+
+    bayarWindow.setMenu(null);
+    bayarWindow.loadURL(`file://${__dirname}/kasir.html`);
+    bayarWindow.on("closed", ()  => (bayarWindow = null));
 };
 
 const aboutWindowCreator = () => {
@@ -72,47 +88,49 @@ const aboutWindowCreator = () => {
         },
         width: 600,
         height: 400,
-        title: "About"
+        title: "About Admin"
     });
 
     aboutWindow.setMenu(null);
-    aboutWindow.loadURL(`file://${__dirname}/agus.html`);
-    aboutWindow.on("closed", ()  => (caboutWindow = null));
+    aboutWindow.loadURL(`file://${__dirname}/about.html`);
+    aboutWindow.on("closed", ()  => (aboutWindow = null));
 };
 
-ipcMain.on("appointment:create", (event, appointment) => {
-    appointment["id"] = uuidv4();
-    appointment["done"] = 0;
-    allApointment.push(appointment);
 
-    createWindow.close();
 
-    console.log(allApointment);
+ipcMain.on("kasir:customer", (event, kasir) => {
+    kasir["id"] = uuidv4();
+    kasir["done"] = 0;
+    allkasir.push(kasir);
+
+    customerWindow.close();
+
+    console.log(allkasir);
 });
 
-ipcMain.on("appointment:request:list", event => {
-    console.log("here1");
+ipcMain.on("kasir:request:list", event => {
+    listWindow.webContents.send('kasir:response:list', allkasir);
 });
 
-ipcMain.on("appointment:request:today", event => {
+ipcMain.on("kasir:request:today", event => {
     console.log("here2");
 });
 
-ipcMain.on("appointment:done", (event, id) => {
+ipcMain.on("kasir:done", (event, id) => {
     console.log("here3");
 });
 
 const menuTemplate =  [{
-        label: "File",
+        label: "Customer",
         submenu:[{
-                label: "New Appointment",
+                label: "Input Data Pelanggan",
 
                 click() {
-                    createWindowCreator()
+                    customerWindowCreator()
                 }
             },
             {
-                label: "All Apointments",
+                label: "Save Data pelanggan",
                 click() {
                     listWindowCreator();
                 }
@@ -128,6 +146,13 @@ const menuTemplate =  [{
     },
 
     {
+        label: "kasir",
+        click(){
+            bayarWindowCreator();
+        }
+    }
+    ,
+    {
 
         label: "View",
         submenu: [{ role: "reload" }, { role: "toggledevtools" }]
@@ -140,6 +165,7 @@ const menuTemplate =  [{
             aboutWindowCreator();
 }
     }
+   
 
 
 ]

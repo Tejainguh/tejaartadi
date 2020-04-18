@@ -3,10 +3,10 @@
 <head>                     
 </head>
 
-<body>
-    <h3>Create Appoinment</h3>
+<body style="background-color: slategray">
+    <h3>Data Customer</h3>
     <form id="form">
-        <label for="name">Name:</label><br />
+        <label for="name">Nama:</label><br />
         <input type="text" name="name" required />
         <br /><br />
         <label for="number">Phone Number:</label><br />
@@ -15,11 +15,14 @@
         <label for="date">Date:</label><br />
         <input type="date" name="date" placeholder="YYYY-MM-DD" required />
         <br /><br />
-        <label for="hour">Hour:</label><br />
-        <input type="text" name="hour" placeholder="hh:mm" required />
-        <br /><br />
-        <label for="symptons">Symptoms:</label><br />
-        <textarea type="text" name="symptons" required></textarea>
+        <label for="status">kelamin:</label><br/>
+        <select id="status" name="status">
+            <option>laki laki</option>
+            <option>perempuan</option>
+            </select> <br/><br/>
+
+        <label for="alamat">Alamat:</label><br />
+        <input type="text" name="alamat" required></input>
         <br /><br />
         <input type="submit" />
     </form>
@@ -40,7 +43,7 @@
                     elements[form.elements[i].name] = form.elements[i].value;
             }
 
-            ipcRenderer.send("appointment:create", elements);
+            ipcRenderer.send("kasir:customer", elements);
         })
     </script>
     
