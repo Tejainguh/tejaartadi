@@ -1,0 +1,51 @@
+<html>
+<head>
+
+</head>
+
+<body>
+    <h3>-Riwayat-</h3>
+    <div id="riwayat"></div>
+</body>
+<script>
+    const electron = require("electron");
+    const {
+        ipcRenderer
+    } = electron;
+    
+    ipcRenderer.send("data1:request:riwayat");
+    
+    ipcRenderer.on("data1:response:riwayat", (event, data1) => {
+        const riwayatDiv = document.getElementById("riwayat");
+        data1.forEach(data1 => {
+            const data1Div = document.createElement("div");
+            
+            const Type_SuhuParagraph = document.createElement("p");
+            Type_SuhuParagraph.innerHTML = `Type_Suhu: ${data1.Type_Suhu}`;
+
+            const Jumlah_SuhuParagraph = document.createElement("p");
+            Jumlah_SuhuParagraph.innerHTML = `Jumlah_Suhu: ${data1.Jumlah_Suhu}`;
+
+            const ButtonParagraph = document.createElement("p");
+            ButtonParagraph.innerHTML = `Button: ${data1.Button}`;
+
+            const HasilParagraph = document.createElement("p");
+            HasilParagraph.innerHTML = `Hasil: ${data1.Hasil}`;
+
+            const doneParagraph = document.createElement("p");
+            doneParagraph.innerHTML = `Done: ${data1.done ? "yes" : "no"}`;
+
+            const hr = document.createElement("hr");
+
+            data1Div.appendChild(Type_SuhuParagraph);
+            data1Div.appendChild(Jumlah_SuhuParagraph);
+            data1Div.appendChild(ButtonParagraph);
+            data1Div.appendChild(HasilParagraph);
+            data1Div.appendChild(doneParagraph);
+            data1Div.appendChild(hr);
+
+            riwayatDiv.append(data1Div);
+        });
+    });
+</script>
+</html>

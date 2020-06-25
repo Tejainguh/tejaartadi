@@ -1,0 +1,58 @@
+<html>
+<head>
+
+</head>
+
+<body>
+    <h3>-Riwayat-</h3>
+    <div id="riwayat2"></div>
+</body>
+<script>
+    const electron = require("electron");
+    const {
+        ipcRenderer
+    } = electron;
+    
+    ipcRenderer.send("data2:request:riwayat2");
+    
+    ipcRenderer.on("data2:response:riwayat2", (event, data2) => {
+        const riwayat2Div = document.getElementById("riwayat2");
+        data2.forEach(data2 => {
+            const data2Div = document.createElement("div");
+            
+            const RumusParagraph = document.createElement("p");
+            RumusParagraph.innerHTML = `Rumus: ${data2.Rumus}`;
+
+            const Jumlah_1Paragraph = document.createElement("p");
+            Jumlah_1Paragraph.innerHTML = `Jumlah_1: ${data2.Jumlah_1}`;
+
+            const Jumlah_2Paragraph = document.createElement("p");
+            Jumlah_2Paragraph.innerHTML = `Jumlah_2: ${data2.Jumlah_2}`;
+
+            const ButtonParagraph = document.createElement("p");
+            ButtonParagraph.innerHTML = `Button: ${data2.Button}`;
+
+            const HasilParagraph = document.createElement("p");
+            HasilParagraph.innerHTML = `Hasil: ${data2.Hasil}`;
+
+            const doneParagraph = document.createElement("p");
+            doneParagraph.innerHTML = `Done: ${data2.done ? "yes" : "no"}`;
+
+            const hr = document.createElement("hr");
+
+            data2Div.appendChild(RumusParagraph);
+            data2Div.appendChild(Jumlah_1Paragraph);
+            data2Div.appendChild(Jumlah_2Paragraph);
+            data2Div.appendChild(ButtonParagraph);
+            data2Div.appendChild(HasilParagraph);
+            data2Div.appendChild(doneParagraph);
+            data2Div.appendChild(hr);
+
+            riwayat2Div.append(data2Div);
+        });
+    });
+    const done = id => {
+        ipcRenderer.send("data2:done", id);
+    };
+</script>
+</html>
